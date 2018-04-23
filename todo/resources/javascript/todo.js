@@ -22,7 +22,7 @@ function remove(element) {
 			list.parentNode.removeChild(list);
 			//!!!AQUI!!!
 			let myNodelist = document.querySelectorAll("li");
-  			let items = myNodelist.length;
+			let items = myNodelist.length;
   			document.getElementById("myItems").innerHTML = items + " items";
 		}
 	}
@@ -31,7 +31,7 @@ function remove(element) {
 //Esta funcion crea una elemento "li" nuevo con el valor del input 
 function add() {
 	let inputValue = document.getElementById("myInput").value;
-	var li = document.createElement("li");
+	let li = document.createElement("li");
 	let text = document.createTextNode(inputValue);
 	li.appendChild(text);
 	if (inputValue !== "") {
@@ -41,8 +41,44 @@ function add() {
 	remove(li);
 	//!!!AQUI!!!
 	let myNodelist = document.querySelectorAll("li");
-    let items = myNodelist.length;
-    document.getElementById("myItems").innerHTML = items + " items";
+	let items = myNodelist.length;
+  	document.getElementById("myItems").innerHTML = items + " items";
+}
+
+function filter(event) {
+	let listElem = document.querySelectorAll("li");
+	let all = document.getElementById("all");
+	let active = document.getElementById("active");
+	let completed = document.getElementById("completed");
+
+	if (event.id == "active") {
+		all.className = "btn";
+		completed.className = "btn";
+		active.className = "btn active";
+		for (let i = 0; i < listElem.length; i++) {
+			listElem[i].style.display = "block";
+			if (listElem[i].className === "checked") {
+				listElem[i].style.display = "none";
+			}
+		}
+	} else if (event.id == "completed") {
+		all.className = "btn";
+		active.className = "btn";
+		completed.className = "btn active";
+		for (let i = 0; i < listElem.length; i++) {
+			listElem[i].style.display = "block";
+			if (listElem[i].className !== "checked") {
+				listElem[i].style.display = "none";
+			}
+		}
+	} else {
+		completed.className = "btn";
+		active.className = "btn";
+		all.className = "btn active"
+		for (let i = 0; i < listElem.length; i++) {
+			listElem[i].style.display = "block";
+		}
+	}
 }
 
 //Esto hace que cada vez que le des click a una lista se cambie el color de fondo 
@@ -53,3 +89,4 @@ list.addEventListener("click", function(event) {
 		event.target.classList.toggle("checked");
 	}
 });
+
